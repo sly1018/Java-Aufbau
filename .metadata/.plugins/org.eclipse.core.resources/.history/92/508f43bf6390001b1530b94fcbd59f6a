@@ -1,0 +1,23 @@
+package animals.anonym;
+
+public class AnonymeKlasseDemo {
+
+	public static void main(String[] args) {
+		AnimalList animals = new AnimalList();
+		animals.showAll();
+
+		// Anonyme Interface Implementierung:
+		// Es wird eine (anynome) Klasse definieret und 1 Instanz von dieser Klasse
+		// erzeugt
+		AnimalFilter filter1 = new AnimalFilter() {
+			// Implementierung für die isTrueFor-Methode
+			@Override
+			public boolean isTrueFor(Animal a) {
+				return a.isHerbivore();
+			}
+		};
+		
+		animals.showAll(filter1);
+	}
+
+}

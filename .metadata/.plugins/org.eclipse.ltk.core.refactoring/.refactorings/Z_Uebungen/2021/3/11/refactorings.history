@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;geometrischeFormen&apos; to &apos;E_Interfaces/src&apos;&#x0D;&#x0A;- Original project: &apos;Z_Uebungen&apos;&#x0D;&#x0A;- Destination element: &apos;E_Interfaces/src&apos;&#x0D;&#x0A;- Original element: &apos;Z_Uebungen/src/geometrischeFormen&apos;" description="Copy package" destination="=E_Interfaces/src" element1="/src&lt;geometrischeFormen" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1615893784310" version="1.0"/>
+</session>

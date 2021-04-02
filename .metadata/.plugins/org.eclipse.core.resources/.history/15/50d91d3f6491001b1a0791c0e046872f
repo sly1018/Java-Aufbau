@@ -1,0 +1,5 @@
+package mitarbeiterVerwaltung2;
+
+public class MitarbeiterException extends Exception {
+
+}

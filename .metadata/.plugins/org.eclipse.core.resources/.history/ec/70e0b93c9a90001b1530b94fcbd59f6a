@@ -1,0 +1,13 @@
+package calc;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class CalculatorFrame extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+
+	final JButton btnKlick1, btnKlick2, btnKlick3, btnKlick4, btnKlick5, btnKlick6, btnKlick7, btnKlick8, btnKlick9,
+			btnKlick10, btnKlick11, btnKlick12, btnKlick13, btnKlick14, btnKlick15, btnKlick16, btnKlick17;
+
+}

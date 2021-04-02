@@ -1,0 +1,61 @@
+package intro;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class ButtonsFenster extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	// Attribute für unsere Controls(=Components = Steuerelemente)
+	final JButton btnKlick1, btnKlick2, btnKlick3;
+	final JLabel lblInfo;
+
+	public ButtonsFenster() {
+		super("Viele Buttons...");
+		setSize(280, 600);
+		setLayout(null);
+		int x = 30, y = 50, width = 100, height = 25;
+
+		btnKlick1 = createButton("Ziffer 1", "1", x, y, width, height);
+		btnKlick1.addActionListener(this);
+		add(btnKlick1);
+
+		// Rechts daneben
+		btnKlick2 = createButton("Ziffer 2", "2", x + width + 10, y, width, height);
+		btnKlick2.addActionListener(this);
+		add(btnKlick2);
+
+		// 2. Zeile
+		btnKlick3 = createButton("Operator A", "A", x, y + height + 10, width, height);
+		btnKlick3.addActionListener(this);
+		add(btnKlick3);
+
+		lblInfo = new JLabel("");
+		lblInfo.setBounds(x, y + 2 * (height + 10), 2 * width + 10, height);
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+
+	private JButton createButton(String text, String action, int x, int y, int w, int h) {
+		JButton btn = new JButton(text);
+		btn.setActionCommand(action);
+		btn.setLocation(x, y);
+		btn.setSize(w, h);
+
+		return btn;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		// Eine Handler-Methode für alle Buttons
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+}

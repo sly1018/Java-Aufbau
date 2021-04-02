@@ -1,0 +1,15 @@
+package animals.lambdaUndAnonym;
+
+public class MethodReferencesDemo {
+
+	public static void main(String[] args) {
+		AnimalList animals = new AnimalList();
+		// Statt Lambda-Expression, die unsere satic Methode aufruft
+		animals.showAnimals(x -> !x.isHerbivore());
+	}
+
+	// Methode deren Signatur bis auf den Namen zur AnimalFilter.isTrueFor passt.
+	static boolean istFleischfresser(Animal animal) {
+		return !animal.isHerbivore();
+	}
+}

@@ -1,0 +1,41 @@
+package intro2;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFileChooser;
+
+public class IntroHandler {
+
+	private IntroFenster2 meinFenster;
+
+	private JFileChooser fileDialog;
+
+	public IntroHandler(IntroFenster2 fenster) {
+		meinFenster = fenster;
+		// File-Auswahldialog mit dem akt. Verzeichnes aus Ausgangspunkt
+		fileDialog = new JFileChooser(".");
+	}
+
+	public void onOpen(ActionEvent evt) {
+		System.out.println("onOpen, command = " + evt.getActionCommand());
+	}
+
+	public void onSaveAs(ActionEvent evt) {
+		System.out.println("onSaveAs, command = " + evt.getActionCommand());
+	}
+
+	public void onExit(ActionEvent evt) {
+		System.out.println("onExit, command = " + evt.getActionCommand());
+	}
+
+	private String selectOpenFilename() {
+		int auswahl = fileDialog.showOpenDialog(meinFenster);
+		// Wenn der Dialog mit OK beendet wurde
+		if (auswahl == JFileChooser.APPROVE_OPTION) {
+
+		}
+
+		return null;
+	}
+
+}

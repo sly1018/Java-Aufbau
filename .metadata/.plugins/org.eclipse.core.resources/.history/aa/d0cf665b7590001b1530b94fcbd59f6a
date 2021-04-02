@@ -1,0 +1,14 @@
+package intro;
+
+import javax.swing.JFrame;
+
+public class ErstesFenster {
+
+	public static void main(String[] args) {
+		// Swing mit "Spaghetti-Code"
+
+		JFrame fenster = new JFrame("Mein erstes Swingfenster");
+		fenster.setSize(400, 300);
+	}
+
+}

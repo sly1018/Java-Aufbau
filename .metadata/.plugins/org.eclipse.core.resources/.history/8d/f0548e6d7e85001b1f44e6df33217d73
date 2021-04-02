@@ -1,0 +1,10 @@
+package bitoperatoren;
+
+public class DatumKompakt {
+	
+	// 5 Bit für den Tag, 4 Bit für das Monat, 7 Bit für das Jahr
+	private short datumBits;
+	
+	
+
+}

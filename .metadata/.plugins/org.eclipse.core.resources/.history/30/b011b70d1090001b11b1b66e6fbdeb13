@@ -1,0 +1,18 @@
+package mitarbeiterVerwaltung2;
+
+import java.time.LocalDate;
+
+public class MitarbeiterInterfaceProgramm {
+
+	private static MitarbeiterListeItf gruppe1 = new MitarbeiterListe();
+
+	public static void main(String[] args) {
+		gruppe1.mitarbeiterHinzufuegen(
+				new Mitarbeiter("Roman", LocalDate.of(1978, 6, 24), LocalDate.of(2004, 8, 13), 3000));
+		gruppe1.anzeigen(1);
+		
+		gruppe1.managerHinzufuegen("Ana", LocalDate.of(2009, 7, 21), 3000);
+		gruppe1.anzeigen(2);
+	}
+
+}

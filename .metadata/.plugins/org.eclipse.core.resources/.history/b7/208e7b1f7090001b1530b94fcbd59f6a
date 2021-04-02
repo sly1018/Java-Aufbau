@@ -1,0 +1,23 @@
+package animals.lambdaUndAnonym;
+
+public class MethodReferencesDemo {
+
+	public static void main(String[] args) {
+		AnimalList animals = new AnimalList();
+		System.out.println("Fleischfresser (2x)");
+
+		// Variante 1: Statische Methode in Klasse
+		// Lambda-Expression, die unsere satic Methode aufruft.
+		animals.showAnimals(a -> MethodReferencesDemo.istFleischfresser(a));
+		// Kann ersetzt werden durch eine Methodenreferenz.
+		animals.showAnimals(MethodReferencesDemo::istFleischfresser);
+
+		// Variante 2: Instanzmethode in Klasse.
+		AnimalHelper helperObject = new AnimalHelper();
+	}
+
+	// Methode deren Signatur bis auf den Namen zur AnimalFilter.isTrueFor passt.
+	static boolean istFleischfresser(Animal animal) {
+		return !animal.isHerbivore();
+	}
+}

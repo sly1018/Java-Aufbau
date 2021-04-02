@@ -1,0 +1,7 @@
+package intro2;
+
+public class IntroHandler {
+	
+	private IntroFenster2 meinFenster;
+
+}

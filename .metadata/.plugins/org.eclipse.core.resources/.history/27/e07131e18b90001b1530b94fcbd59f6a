@@ -1,0 +1,9 @@
+package intro;
+
+import javax.swing.JFrame;
+
+public class ButtonsFenster extends JFrame {
+	public ButtonsFenster() {
+		super("Viele Buttons...");
+	}
+}

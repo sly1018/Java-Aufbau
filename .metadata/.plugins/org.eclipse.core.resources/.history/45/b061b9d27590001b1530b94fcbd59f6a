@@ -1,0 +1,20 @@
+package intro;
+
+import javax.swing.JFrame;
+
+public class ErstesFenster {
+
+	public static void main(String[] args) {
+		// Swing mit "Spaghetti-Code"
+
+		JFrame fenster = new JFrame("Mein erstes Swingfenster");
+		fenster.setSize(400, 300);
+
+		// ...
+		// Das Programm beenden wenn das Fenster geschlossen wird.
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		fenster.setVisible(true);
+	}
+
+}

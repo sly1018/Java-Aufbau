@@ -1,0 +1,11 @@
+package bitoperatoren;
+
+import java.time.LocalDate;
+
+public class Wetterbits {
+	
+	private String stadt;
+	private LocalDate datum;
+	private byte wetterBits;
+	
+}

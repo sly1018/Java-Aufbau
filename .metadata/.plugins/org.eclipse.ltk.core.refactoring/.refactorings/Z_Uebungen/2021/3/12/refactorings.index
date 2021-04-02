@@ -1,0 +1,12 @@
+1616509565700	Copy package
+1616510088264	Extract interface 'MitarbeiterGruppeItf'
+1616510580095	Copy compilation unit
+1616521823141	Rename type 'ByTypeUndEintrittsdatum'
+1616582299332	Extract interface 'MitarbeiterListeItf'
+1616583315020	Delete element
+1616598938408	Rename type 'MitarbeiterListe'
+1616598946225	Rename type 'MitarbeiterListeArray'
+1616599090466	Copy compilation unit
+1616599100888	Copy compilation unit
+1616599246081	Copy compilation unit
+1616605111303	Rename field 'grupppe'

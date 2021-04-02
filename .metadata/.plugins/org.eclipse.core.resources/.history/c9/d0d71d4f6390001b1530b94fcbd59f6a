@@ -1,0 +1,19 @@
+package animals.anonym;
+
+public class AnonymeKlasseDemo {
+
+	public static void main(String[] args) {
+		AnimalList animals = new AnimalList();
+		animals.showAll();
+
+		// Anonyme Interface Implementierung
+		AnimalFilter filter1 = new AnimalFilter() {
+			// Implementierung für die isTrueFor-Methode
+			@Override
+			public boolean isTrueFor(Animal a) {
+				return false;
+			}
+		};
+	}
+
+}
