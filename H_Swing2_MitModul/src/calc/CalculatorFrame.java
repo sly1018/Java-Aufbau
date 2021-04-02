@@ -1,5 +1,7 @@
 package calc;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -11,31 +13,53 @@ public class CalculatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	final JButton btnKlick1 /*
-							 * , btnKlick2, btnKlick3, btnKlick4, btnKlick5, btnKlick6, btnKlick7,
-							 * btnKlick8, btnKlick9, btnKlick10, btnKlick11, btnKlick12, btnKlick13,
-							 * btnKlick14, btnKlick15, btnKlick16, btnKlick17
-							 */;
+	final JButton btnKlick1, btnKlick2, btnKlick3, btnKlick4/*
+															 * , btnKlick5, btnKlick6, btnKlick7, btnKlick8, btnKlick9,
+															 * btnKlick10, btnKlick11, btnKlick12, btnKlick13,
+															 * btnKlick14, btnKlick15, btnKlick16, btnKlick17
+															 */;
 	final JLabel lblKopf, lblInfo/* , lblInfo2, lblInfo3 */;
 
 	public CalculatorFrame() {
 		super("Einfacher Taschenrechner");
-		setSize(280, 600);
-		setLayout(null);
-		int x = 30, y = 50, width = 100, height = 25;
+		setSize(250, 500);
 
-		btnKlick1 = erstelleButton("+", "Plus", x, y + 50, width - 50, height);
+		setLayout(null);
+
+		// Die Koordinaten, Breite und Höhe festen Werten zuweisen.
+		int x = 15, y = 50, width = 100, height = 25;
+
+		// Eine Überschrift.
+		lblKopf = new JLabel("Rechner");
+		Font font = new Font("Arial", Font.BOLD, 30);
+		lblKopf.setFont(font);
+		lblKopf.setBounds(x + 35, y, width + 25, height);
+		lblKopf.setBackground(new Color(220, 220, 220));
+		lblKopf.setOpaque(true);
+		add(lblKopf);
+
+		// Die Buttons für Ziffern und Operatoren. Button mit ActionListener und
+		// hinzufügen zum Frame.
+		// Addition
+		btnKlick1 = erstelleButton("+", "Addition", x, y + 50, width - 50, height);
 		btnKlick1.addActionListener(this::verarbeiteOperator);
 		add(btnKlick1);
+		// Subtraktion
+		btnKlick2 = erstelleButton("-", "Subtraktion", x + 50, y + 50, width - 50, height);
+		btnKlick2.addActionListener(this::verarbeiteOperator);
+		add(btnKlick2);
+		// Multiplikation
+		btnKlick3 = erstelleButton("*", "Multiplikation", x + 100, y + 50, width - 50, height);
+		btnKlick3.addActionListener(this::verarbeiteOperator);
+		add(btnKlick3);
+		// Division
+		btnKlick4 = erstelleButton("/", "Division", x + 150, y + 50, width - 50, height);
+		btnKlick4.addActionListener(this::verarbeiteOperator);
+		add(btnKlick4);
 
-		lblInfo = new JLabel("");
-		lblInfo.setBounds(x, y + 2 * (height + 10), 2 * width + 10, height);
+		lblInfo = new JLabel("Temp");
+		lblInfo.setBounds(x + 75, y + 2 * (height + 20), 2 * width + 10, height);
 		add(lblInfo);
-
-		lblKopf = new JLabel("Rechner");
-		lblKopf.setBounds(30, 50, 100, 25);
-		// lblKopf
-		add(lblKopf);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
