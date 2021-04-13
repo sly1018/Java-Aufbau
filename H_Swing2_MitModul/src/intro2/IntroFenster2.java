@@ -36,6 +36,8 @@ public class IntroFenster2 extends JFrame {
 		pnlButtons.add(btnOpen = new JButton("Öffnen"));
 		btnOpen.setActionCommand(ACTION_OPEN);
 		// Als ActionListener Methodenreferenz zu einer passenden Methode angeben.
+		// Statt Lambda-Expression, die die Methode opOpen aufruft.
+		// btnOpen.addActionListener(e -> meinHandler.onOpen(e));
 		btnOpen.addActionListener(meinHandler::onOpen);
 
 		pnlButtons.add(btnSaveAs = new JButton("Speicher unter"));

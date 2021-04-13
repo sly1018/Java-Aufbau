@@ -1,4 +1,4 @@
-﻿package Layout;
+﻿package layout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

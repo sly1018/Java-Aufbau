@@ -16,13 +16,19 @@ public class CalculatorFrame extends JFrame {
 	// GUI
 	final JButton btnKlick1, btnKlick2, btnKlick3, btnKlick4, btnKlick5, btnKlick6, btnKlick7, btnKlick8, btnKlick9,
 			btnKlick10, btnKlick11, btnKlick12, btnKlick13, btnKlick14, btnKlick15, btnKlick16, btnKlick17;
-	final JLabel lblKopf, lblInfo, lblInfo2, lblInfo3;
-	
-	// Variable für Zwischenergebnisse und Ergebnis
-	int ergebnis, ziffer;
+	final JLabel lblKopf, lblOperand, lblBerechnung, lblErgebnis;
+
+	// Variablen für Operanden und Ergebnis.
+	int ergebnis = 0, operand, zwischenErgebnis;
+
+	// String für Zahlenkombination.
+	String zahlenKombi = new String("");
+
+	// Char für Operator.
+	char operator = ' ';
 
 	public CalculatorFrame() {
-		super("Einfacher Taschenrechner");
+		super("Rechner");
 		setSize(250, 500);
 
 		setLayout(null);
@@ -92,7 +98,7 @@ public class CalculatorFrame extends JFrame {
 		add(btnKlick11);
 		// Gleich
 		btnKlick12 = erstelleButton("=", "=", x + 150, y + 100, width - 50, height);
-		btnKlick12.addActionListener(this::verarbeiteOperator);
+		btnKlick12.addActionListener(this::zeigeErgebnis);
 		add(btnKlick12);
 
 		// Vierte Reihe
@@ -110,7 +116,7 @@ public class CalculatorFrame extends JFrame {
 		add(btnKlick15);
 		// C
 		btnKlick16 = erstelleButton("C", "C", x + 150, y + 125, width - 50, height);
-		btnKlick16.addActionListener(this::verarbeiteOperator);
+		btnKlick16.addActionListener(this::setzeZurück);
 		add(btnKlick16);
 
 		// Fünfte Reihe
@@ -120,23 +126,25 @@ public class CalculatorFrame extends JFrame {
 
 		// Labels
 		// Operand
-		lblInfo = new JLabel("");
-		lblInfo.setBackground(new Color(255, 255, 255));
-		lblInfo.setOpaque(true);
-		lblInfo.setBounds(x + 75, y + 2 * (height + 100), width + 10, height);
-		add(lblInfo);
+		lblOperand = new JLabel("");
+		lblOperand.setBackground(new Color(255, 255, 255));
+		lblOperand.setOpaque(true);
+		lblOperand.setBounds(x + 50, y + 2 * (height + 100), width, height);
+		add(lblOperand);
 
-		lblInfo2 = new JLabel("");
-		lblInfo2.setBackground(new Color(255, 255, 255));
-		lblInfo2.setOpaque(true);
-		lblInfo2.setBounds(x + 75, y + 2 * (height + 125), width + 10, height);
-		add(lblInfo2);
+		// Berechnung
+		lblBerechnung = new JLabel("");
+		lblBerechnung.setBackground(new Color(255, 255, 255));
+		lblBerechnung.setOpaque(true);
+		lblBerechnung.setBounds(x + 50, y + 2 * (height + 125), width, height);
+		add(lblBerechnung);
 
-		lblInfo3 = new JLabel("");
-		lblInfo3.setBackground(new Color(255, 255, 255));
-		lblInfo3.setOpaque(true);
-		lblInfo3.setBounds(x + 75, y + 2 * (height + 150), width + 10, height);
-		add(lblInfo3);
+		// Ergebnis
+		lblErgebnis = new JLabel("");
+		lblErgebnis.setBackground(new Color(255, 255, 255));
+		lblErgebnis.setOpaque(true);
+		lblErgebnis.setBounds(x + 50, y + 2 * (height + 150), width, height);
+		add(lblErgebnis);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -154,20 +162,19 @@ public class CalculatorFrame extends JFrame {
 		try {
 			String op = evt.getActionCommand();
 			System.out.printf("Operator %s wird verarbeitet\n", op);
-			lblInfo3.setText(op);
+
+			operator = op.charAt(0);
+			operand = Integer.parseInt(lblOperand.getText());
+
+			lblBerechnung.setText(lblBerechnung.getText() + op);
 			
-			switch (op.charAt(0)) {
-			case '+' -> ergebnis = ergebnis + ziffer; 
-			case '-' -> ergebnis = ergebnis - ziffer;
-			case '*' -> ergebnis = ergebnis * ziffer;
-			case '/' -> ergebnis = ergebnis / ziffer;
-			case '%' -> ergebnis = ergebnis % ziffer;
-			case 'C' -> ergebnis = 0;
-			case '=' -> zeigeErgebnis();
-			default ->
-			throw new IllegalArgumentException("Unexpected value: " + op);
-			}
 			
+			lblOperand.setText("");
+			System.out.printf("ergebnis: %d\n", ergebnis);
+			lblErgebnis.setText(Integer.toString(ergebnis));
+
+			zahlenKombi = "";
+
 		} catch (Exception e) {
 			zeigeFehler(e, "Fehler beim verarbeiten des Operators");
 		}
@@ -176,16 +183,47 @@ public class CalculatorFrame extends JFrame {
 	private void verarbeiteZiffer(ActionEvent evt) {
 		try {
 			String z = evt.getActionCommand();
+			// Ausgabe an der Konsole Für Debug Zwecke
 			System.out.printf("Ziffer %s wird verarbeitet\n", z);
-			ziffer = Integer.parseInt(z);
-			lblInfo.setText(lblInfo.getText() + lblInfo3.getText() + z);
+
+			zahlenKombi = zahlenKombi + z;
+
+			if (operator == ' ')
+				ergebnis = operand = Integer.parseInt(zahlenKombi);
+			
+//			if (zahlenKombi == "")
+//				operand = ergebnis;
+			else	
+				operand = Integer.parseInt(zahlenKombi);
+
+			// Ausgabe an der Konsole für Debugzwecke
+			System.out.println("Vor der Berechnung: \n");
+			System.out.printf("z: %s, zahlenKombi: %s, operand: %d, ergebnis: %d\n", z, zahlenKombi, operand, ergebnis);
+
+			lblOperand.setText(zahlenKombi);
+			lblBerechnung.setText(lblBerechnung.getText() + z);
+
 		} catch (Exception e) {
 			zeigeFehler(e, "Fehler beim verarbeiten der Ziffer");
 		}
 	}
-	
-	private void zeigeErgebnis() {
-		lblInfo2.setText(String.valueOf(ergebnis));
+
+	private void zeigeErgebnis(ActionEvent evt) {
+		try {
+			berechne();
+			// Ergebnis speichern damit es nach dem zurücksetzen der Felder wieder im
+			// Ergebnislabel erscheint.
+			int e = ergebnis;
+
+			// Zurücksetzen
+			setzeZurück(evt);
+
+			lblErgebnis.setText(String.valueOf(e));
+
+		} catch (Exception e) {
+			zeigeFehler(e, "Fehler beim verarbeiten der Rechnung");
+		}
+
 	}
 
 	private void zeigeFehler(Exception e, String titel) {
@@ -193,5 +231,54 @@ public class CalculatorFrame extends JFrame {
 		e.printStackTrace();
 		JOptionPane.showConfirmDialog(this, e.getMessage(), titel, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.ERROR_MESSAGE);
+	}
+
+	private void berechne() {
+		
+		switch (operator) {
+		case '+' -> addiere();
+		case '-' -> subtrahiere();
+		case '*' -> multipliziere();
+		case '/' -> dividiere();
+		case '%' -> moduliere();
+		default -> throw new IllegalArgumentException("Unexpected value: " + operator);
+		}
+		
+		System.out.printf("zahlenKombi: %s, operand: %d, ergebnis: %d\n", zahlenKombi, operand, ergebnis);
+
+	}
+
+	private void addiere() {
+		ergebnis += operand;
+	}
+
+	private void subtrahiere() {
+		ergebnis -= operand;
+	}
+
+	private void multipliziere() {
+		ergebnis *= operand;
+	}
+
+	private void dividiere() {
+		ergebnis /= operand;
+	}
+
+	private void moduliere() {
+		ergebnis %= operand;
+	}
+
+	private void setzeZurück(ActionEvent evt) {
+		// Labels
+		lblOperand.setText("");
+		lblBerechnung.setText("");
+		lblErgebnis.setText("");
+		// Integer
+		ergebnis = operand = 0;
+		// Character
+		operator = ' ';
+		// String
+		zahlenKombi = "";
+
 	}
 }

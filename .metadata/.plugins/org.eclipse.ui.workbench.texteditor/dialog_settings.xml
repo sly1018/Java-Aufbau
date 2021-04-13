@@ -6,8 +6,13 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="runAnzeigen"/>
+		<item key="selection" value="taVorkenntnisse"/>
 		<list key="findhistory">
+			<item value="file"/>
+			<item value="taVorkenntnisse"/>
+			<item value="ergebnis"/>
+			<item value="text"/>
+			<item value="meinFenster"/>
 			<item value="gruppe1.anzeigen"/>
 			<item value="txtOr"/>
 			<item value="txtZuname"/>
@@ -18,6 +23,8 @@
 			<item value=""/>
 		</list>
 		<list key="replacehistory">
+			<item value="zwischenErgebnis"/>
+			<item value="fenster"/>
 			<item value="runAnzeigen"/>
 		</list>
 	</section>

@@ -1,4 +1,4 @@
-﻿package Layout;
+﻿package layout;
 
 import static java.awt.GridBagConstraints.BOTH;
 import static java.awt.GridBagConstraints.WEST;

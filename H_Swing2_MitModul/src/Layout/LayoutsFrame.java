@@ -1,4 +1,4 @@
-﻿package Layout;
+﻿package layout;
 
 /*
  * Programm zur Demonstration der verschiedenen Layouts

@@ -1,9 +1,0 @@
-package intro;
-
-public class ErstesFenster {
-
-	public static void main(String[] args) {
-		
-	}
-
-}

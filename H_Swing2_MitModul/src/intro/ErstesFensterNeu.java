@@ -37,17 +37,29 @@ public class ErstesFensterNeu extends JFrame {
 		lblInfo.setBounds(30, 140, 200, 50);
 
 		// Beim Button einen ActionListener registrieren
-		btnAction.addActionListener(new ActionListener() {
+		// Statt anonymer Implementierung.
+//		btnAction.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// Den Namen aus der Textbox holen
+//				String name = txtName.getText();
+//				// Ausgabe für Debug-Zwecke, der Enduser sieht das nicht.
+//				System.out.println("Dein Name: " + name);
+//				lblInfo.setText("Dein Name: %s".formatted(name));
+//			}
+//		});
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Den Namen aus der Textbox holen
-				String name = txtName.getText();
-				// Ausgabe für Debug-Zwecke, der Enduser sieht das nicht.
-				System.out.println("Dein Name: " + name);
-				lblInfo.setText("Dein Name: %s".formatted(name));
-			}
-		});
+		// Lambda Expression
+		btnAction.addActionListener(
+
+				e -> {
+					// Den Namen aus der Textbox holen
+					String name = txtName.getText();
+					// Ausgabe für Debug-Zwecke, der Enduser sieht das nicht.
+					System.out.println("Dein Name: " + name);
+					lblInfo.setText("Dein Name: %s".formatted(name));
+				});
 
 		this.add(lblName);
 		this.add(txtName);

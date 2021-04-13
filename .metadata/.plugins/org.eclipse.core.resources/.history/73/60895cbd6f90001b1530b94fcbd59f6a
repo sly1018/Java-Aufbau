@@ -1,7 +1,0 @@
-package animals.lambdaUndAnonym;
-
-public class AnimalHelper {
-	public boolean isHeavyAnimal(Animal a) {
-		return a.getWeight() >= 500;
-	}
-}
