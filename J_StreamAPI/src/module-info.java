@@ -1,0 +1,2 @@
+module J_StreamAPI {
+}

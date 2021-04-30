@@ -1,0 +1,10 @@
+
+#lblKopf{
+	-fx-font-size: 18.0px;
+	-fx-font-weight: bold;
+	-fx-font-style: italic;
+}
+
+#lblOperand, #lblErgebnis, #lblBerechnung {
+	-fx-background-color: white;
+}

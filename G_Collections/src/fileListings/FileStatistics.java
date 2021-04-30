@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 public class FileStatistics {
@@ -19,8 +20,13 @@ public class FileStatistics {
 		// rekursiv das Verzeichnis verarbeiten
 		File file = new File(dirName);
 		this.readData(file);
-		//this.showAll();
-		this.showNewestOldest();
+		
+		// this.showAll();
+		// this.showNewestOldest();
+		// this.showNewestOldest(".class");
+		// this.showFiles(".java");
+		// this.showFiles(".class");
+		this.showSizes();
 	}
 
 	// Ein Verzeichnis verarbeiten
@@ -36,7 +42,7 @@ public class FileStatistics {
 				// 1) Extension herausfinden
 				String fileExtension = getFileExtension(file);
 				// String fileName = file.getName();
-		
+
 				// 2) Wenn die Datamap noch keine Liste für die Extension enthält -> neue
 				// (leere)
 				// Liste hinzufügen
@@ -44,7 +50,8 @@ public class FileStatistics {
 					dataMap.put(fileExtension, new ArrayList<FileData>());
 				}
 				// 3) In der Liste für die Extension den Filename hinzufügen
-				FileData fileData = new FileData(file.getName(), file.getAbsolutePath(), file.length(), Instant.ofEpochMilli(file.lastModified()));
+				FileData fileData = new FileData(file.getName(), file.getAbsolutePath(), file.length(),
+						Instant.ofEpochMilli(file.lastModified()));
 				dataMap.get(fileExtension).add(fileData);
 
 			}
@@ -61,6 +68,11 @@ public class FileStatistics {
 		// Für alle Extensions alle Files anzeigen
 		for (String ext : dataMap.keySet()) {
 			List<FileData> files = dataMap.get(ext);
+			System.out.printf("%s\n", ext);
+			for (FileData fileData : files) {
+				System.out.println(fileData.toString());
+			}
+			System.out.println();
 		}
 	}
 
@@ -74,10 +86,23 @@ public class FileStatistics {
 	}
 
 	public void showFiles(String ext) {
-
+		List<FileData> files = dataMap.get(ext);
+		for (FileData fileData : files) {
+			System.out.println(fileData.toString());
+		}
 	}
 
 	public void showSizes() {
+
+		int count = 0;
+
+		for (String ext : dataMap.keySet()) {
+			List<FileData> files = dataMap.get(ext);
+			for (FileData fileData : files) {
+				count++;
+			}
+			System.out.printf("%d %s files.\n", count, ext);
+		}
 
 	}
 
@@ -91,10 +116,40 @@ public class FileStatistics {
 					minFile = fileData;
 				}
 			}
+
+			for (FileData fileData : files) {
+				if (maxFile == null || fileData.getLastModified().isAfter(minFile.getLastModified()))
+					maxFile = fileData;
+			}
+
 			System.out.printf("%s\n", ext);
-			System.out.printf("\tÄltestes: %s", minFile);
-			System.out.printf("\tNeuestes: %s", maxFile);
+			System.out.printf("\tÄltestes: %s\n", minFile);
+			System.out.printf("\tNeuestes: %s\n", maxFile);
+			System.out.println(
+					"----------------------------------------------------------------------------------------------");
 		}
+	}
+
+	public void showNewestOldest(String ext) {
+
+		List<FileData> files = dataMap.get(ext);
+
+		FileData minFile = null, maxFile = null;
+		for (FileData fileData : files) {
+			if (minFile == null || fileData.getLastModified().isBefore(minFile.getLastModified())) {
+				minFile = fileData;
+			}
+		}
+
+		for (FileData fileData : files) {
+			if (maxFile == null || fileData.getLastModified().isAfter(minFile.getLastModified()))
+				maxFile = fileData;
+		}
+
+		System.out.printf("%s\n", ext);
+		System.out.printf("\tÄltestes: %s\n", minFile);
+		System.out.printf("\tNeuestes: %s\n", maxFile);
+
 	}
 
 }

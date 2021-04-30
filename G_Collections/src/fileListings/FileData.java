@@ -13,7 +13,7 @@ public class FileData {
 	// werden.
 	public FileData() {
 	}
-	
+
 	public FileData(String n, String p, long s, Instant lm) {
 		this.name = n;
 		this.path = p;
@@ -41,7 +41,8 @@ public class FileData {
 	// toString
 	@Override
 	public String toString() {
-		return name;
+		return "\tname: [" + name + "]\n\t\t\t" + "path: [" + path + "]\n\t\t\t" + "size: [" + size + "]\n\t\t\t" + "lastModified: ["
+				+ lastModified + "]\n\t\t\t";
 	}
 
 }

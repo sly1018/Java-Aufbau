@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<studentRepository>
+    <students>
+        <student>
+            <id>1</id>
+            <name>Michaela</name>
+            <birthDate>1964-12-28</birthDate>
+            <gender>FEMALE</gender>
+            <areaCode>1140</areaCode>
+            <city>Wien</city>
+            <language>Deutsch</language>
+            <html>true</html>
+            <xml>true</xml>
+            <fxml>true</fxml>
+            <comment>Brave Studentin :-)!</comment>
+        </student>
+        <student>
+            <id>4</id>
+            <name>Lana</name>
+            <birthDate>1989-02-26</birthDate>
+            <gender>FEMALE</gender>
+            <areaCode>1030</areaCode>
+            <city>Wien</city>
+            <language>Deutsch</language>
+            <html>false</html>
+            <xml>false</xml>
+            <fxml>false</fxml>
+            <comment>schlimmes Mädchen</comment>
+        </student>
+        <student>
+            <id>7</id>
+            <name>Senka</name>
+            <birthDate>1988-07-15</birthDate>
+            <gender>FEMALE</gender>
+            <areaCode>1150</areaCode>
+            <city>Wien</city>
+            <language>Deutsch</language>
+            <html>true</html>
+            <xml>false</xml>
+            <fxml>false</fxml>
+            <comment></comment>
+        </student>
+    </students>
+    <nextStudentId>8</nextStudentId>
+</studentRepository>

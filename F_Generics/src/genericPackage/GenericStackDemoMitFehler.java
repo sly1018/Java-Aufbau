@@ -1,4 +1,4 @@
-package genericPackage;
+/*package genericPackage;
 
 public class GenericStackDemoMitFehler {
 
@@ -45,4 +45,4 @@ public class GenericStackDemoMitFehler {
 //		
 //	}
 
-}
+}*/
