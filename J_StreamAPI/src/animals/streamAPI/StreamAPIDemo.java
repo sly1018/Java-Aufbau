@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,8 +19,9 @@ public class StreamAPIDemo {
 //		Stream<Animal> astr = Stream.of(allAnimals);
 //		astr.filter(Predicate.not(Animal::isHerbivore));
 //		astr.sorted(Comparator.comparing(Animal::getName));
-//		astr.forEach(a -> System.out.println(a.getName()));
-
+//		astr.forEach(a -> System.out.println(a .getName()));
+		
+		// Stream für Array holen: Factory-Methode aus Stream
 		Stream.of(allAnimals)
 				// Intermediate operations
 				.filter(Predicate.not(Animal::isHerbivore)).sorted(Comparator.comparing(Animal::getName))

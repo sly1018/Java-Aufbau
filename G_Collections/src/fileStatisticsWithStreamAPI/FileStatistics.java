@@ -28,7 +28,8 @@ public class FileStatistics {
 		// this.showFiles(".java");
 		// this.showFiles(".class");
 		// this.showSizes();
-		this.showTotalSizePerExtension();
+		// this.showTotalSizePerExtension();
+		this.showNewestOldestFilePerExtensionWithOptional();
 	}
 
 	// Ein Verzeichnis verarbeiten
@@ -161,6 +162,15 @@ public class FileStatistics {
 			LongSummaryStatistics summary = files.stream().mapToLong(f -> f.getSize()).summaryStatistics();
 			System.out.printf("[sum=%d], [avg=%.2f], [max=%d]\n", summary.getSum(), summary.getAverage(),
 					summary.getMax());
+		}
+	}
+
+	public void showNewestOldestFilePerExtensionWithOptional() {
+		for (String ext : dataMap.keySet()) {
+			System.out.printf("%s\n", ext);
+			List<FileData> files = dataMap.get(ext);
+
+			Stream.of(files).sorted();
 		}
 	}
 

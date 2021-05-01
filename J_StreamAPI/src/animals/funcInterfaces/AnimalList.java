@@ -2,6 +2,7 @@ package animals.funcInterfaces;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 /**
  * diese Klasse enthält ein Array von Animal-Objekten.
@@ -25,15 +26,15 @@ public class AnimalList {
 		}
 		System.out.println();
 	}
-
-	// Nur die Tiere anzeigen die dem Filter entsprechen.
-	public void showAnimals(AnimalFilter myFilter) {
+	
+	// nur die Tiere anzeigen, die dem Filter entsprechen
+	public void showAnimals(Predicate<Animal> myFilter) {
 		for (int i = 0; i < allAnimals.length; i++) {
-			// Wenn das Filter-Objekt für dieses Tier true liefert
-			// Wir führen hier einen Callback aus: die IsTrueFor-Methode
-			// das Filter-Objekt das vom
-			// Aufrufer übergeben wurde, wird ausgeführt
-			if (myFilter.isTrueFor(allAnimals[i])) {
+			// wenn das Filter-objekt für dieses Tier true liefert
+			// wir führen hier einen Callback aus: die isTrueFor-Methode
+			// des Filter-Objekts das vom  Aufrufer übergeben wurde, 
+			// wird ausgeführt
+			if(myFilter.test(allAnimals[i])) {
 				System.out.println(allAnimals[i]);
 			}
 		}
@@ -41,7 +42,7 @@ public class AnimalList {
 	}
 
 	public void sortiere(Comparator<Animal> comparator) {
-		System.out.println("Comparator Typ " + comparator.getClass().getSimpleName());
+		System.out.println("Comparator Typ " + comparator.getClass().getName());
 		Arrays.sort(allAnimals, comparator);
 	}
 }
