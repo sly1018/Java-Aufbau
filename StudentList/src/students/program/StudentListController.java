@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import students.repository.Student;
 import students.repository.StudentRepository;
+import students.repository.db.StudentDbRepository;
 import students.repository.xml.StudentXmlRepository;
 
 public class StudentListController {
@@ -100,6 +101,13 @@ public class StudentListController {
 
 	public void setRepositoryPath(String path) {
 		repository = new StudentXmlRepository(path);
+		reload();
+	}
+
+	// 2. Möglichkeit für die Repository-Initialisierung
+	public void setConnection(String dbUrl, String username, String password) {
+		// Die Connection-Information an das DB-Repository weitergeben
+		repository = new StudentDbRepository(dbUrl, username, password);
 		reload();
 	}
 

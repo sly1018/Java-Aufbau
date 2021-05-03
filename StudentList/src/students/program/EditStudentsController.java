@@ -1,6 +1,8 @@
 package students.program;
 
 import common.MessageBox;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,6 +73,18 @@ public class EditStudentsController {
 		cmbLanguage.valueProperty().addListener((o, oldval, newval) -> checkValid());
 		grpGender.selectedToggleProperty().addListener((o, oldval, newval) -> checkValid());
 
+		// Variante 1
+		rbMale.selectedProperty().addListener((o, oldVal, newVal) -> {
+			// Sichtbar machen/ verstecken ... je nachdem
+		});
+
+		// Variante 2
+		BooleanBinding isMaleBinding = Bindings.createBooleanBinding(
+				// Callable:beliebigen Codeblock um boolischen Wert zu berechnen
+				() -> rbMale.isSelected(),
+				// properties, von der Wert abhängig ist
+				rbMale.selectedProperty());
+		//
 	}
 
 	public void setStudent(Student editStudent) {
@@ -104,6 +118,7 @@ public class EditStudentsController {
 			} else {
 				rbOther.setSelected(true);
 			}
+			// if(editStudent instanceof ) Mitarbeiter casten
 		}
 	}
 

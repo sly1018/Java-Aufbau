@@ -2,15 +2,20 @@ package fileStatisticsWithStreamAPI;
 
 import java.io.File;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.IntSummaryStatistics;
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.LongSummaryStatistics;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileStatistics {
@@ -29,7 +34,12 @@ public class FileStatistics {
 		// this.showFiles(".class");
 		// this.showSizes();
 		// this.showTotalSizePerExtension();
-		this.showNewestOldestFilePerExtensionWithOptional();
+		// this.showNewestOldestFilePerExtensionWithOptional();
+		// this.showMostCommonExtension();
+		// this.showExtensionWithBiggestFile();
+		// this.showExtensionWithNewestFile();
+		this.showAllFilesSortedWithDate();
+
 	}
 
 	// Ein Verzeichnis verarbeiten
@@ -156,13 +166,13 @@ public class FileStatistics {
 	}
 
 	public void showTotalSizePerExtension() {
-		for (String ext : dataMap.keySet()) {
+
+		dataMap.keySet().forEach(ext -> {
 			System.out.printf("%s\n", ext);
-			List<FileData> files = dataMap.get(ext);
-			LongSummaryStatistics summary = files.stream().mapToLong(f -> f.getSize()).summaryStatistics();
+			LongSummaryStatistics summary = dataMap.get(ext).stream().mapToLong(f -> f.getSize()).summaryStatistics();
 			System.out.printf("[sum=%d], [avg=%.2f], [max=%d]\n", summary.getSum(), summary.getAverage(),
 					summary.getMax());
-		}
+		});
 	}
 
 	public void showNewestOldestFilePerExtensionWithOptional() {
@@ -170,8 +180,83 @@ public class FileStatistics {
 			System.out.printf("%s\n", ext);
 			List<FileData> files = dataMap.get(ext);
 
-			Stream.of(files).sorted();
+			files.sort(Comparator.comparing(FileData::getLastModified));
+
+			// Optional erzeugen und das erste Element ausgeben.
+			Optional<FileData> optional = files.stream().findFirst();
+			System.out.println("Ältestes File: " + optional.get());
+
+			// Mit Hilfe von Optional das letzte Element ausgeben.
+			optional = files.stream().reduce((first, second) -> second);
+			System.out.println("Neuestes File: " + optional.get());
+
 		}
+	}
+
+	public void showMostCommonExtension() {
+		int size;
+		int mostCommonCount = 0;
+		String nameOfExtension = "";
+
+		for (String ext : dataMap.keySet()) {
+			List<FileData> files = dataMap.get(ext);
+			size = (int) files.stream().count();
+			if (size > mostCommonCount) {
+				mostCommonCount = size;
+				nameOfExtension = ext;
+			}
+		}
+
+		System.out.printf("Extension: %s, Anzahl Dateien: %d", nameOfExtension, mostCommonCount);
+	}
+
+	public void showExtensionWithBiggestFile() {
+
+		HashMap<String, Long> hmap = new HashMap<String, Long>();
+
+		for (String ext : dataMap.keySet()) {
+			List<FileData> files = dataMap.get(ext);
+			files.sort(Comparator.comparing(FileData::getSize));
+
+			Optional<FileData> optional = files.stream().reduce((first, second) -> second);
+
+			hmap.put(ext, optional.get().getSize());
+		}
+
+		long max = Collections.max(hmap.values());
+		Optional<String> optEx = hmap.entrySet().stream().filter(entry -> entry.getValue() == max)
+				.map(entry -> entry.getKey()).findFirst();
+		System.out.printf("max: %d, ext: %s", max, optEx.get());
+	}
+
+	public void showExtensionWithNewestFile() {
+
+		HashMap<String, LocalDate> hmap = new HashMap<String, LocalDate>();
+
+		for (String ext : dataMap.keySet()) {
+			List<FileData> files = dataMap.get(ext);
+			files.sort(Comparator.comparing(FileData::getLastModified));
+
+			Optional<FileData> optional = files.stream().reduce((first, second) -> second);
+
+			hmap.put(ext, LocalDate.ofInstant(optional.get().getLastModified(), ZoneOffset.UTC));
+		}
+
+		LocalDate newestFile = Collections.max(hmap.values());
+		Optional<String> optEx = hmap.entrySet().stream().filter(entry -> entry.getValue() == newestFile)
+				.map(entry -> entry.getKey()).findFirst();
+		System.out.printf(" Date of newest File: %s, ext: %s", newestFile, optEx.get());
+	}
+
+	public void showAllFilesSortedWithDate() {
+
+		for (String ext : dataMap.keySet()) {
+			System.out.printf("%s\n", ext);
+			List<FileData> files = dataMap.get(ext);
+			files.sort(Comparator.comparing(FileData::getLastModified));
+			files.forEach(System.out::println);
+		}
+
 	}
 
 }

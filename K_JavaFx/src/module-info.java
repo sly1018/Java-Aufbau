@@ -12,4 +12,5 @@ module javaFxDemos {
 	opens intro;
 	opens introFxml;
 	opens menus;
+	opens layout;
 }

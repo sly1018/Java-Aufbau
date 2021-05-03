@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy package &apos;enumPackage&apos; to &apos;C_Arrays/src&apos;&#x0D;&#x0A;- Original project: &apos;B_Klassen&apos;&#x0D;&#x0A;- Destination element: &apos;C_Arrays/src&apos;&#x0D;&#x0A;- Original element: &apos;B_Klassen/src/enumPackage&apos;" description="Copy package" destination="=C_Arrays/src" element1="/src&lt;enumPackage" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1615798469471" version="1.0"/>
-</session>
