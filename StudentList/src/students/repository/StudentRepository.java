@@ -20,4 +20,6 @@ public interface StudentRepository {
 
 	void deleteStudent(int id) throws StudentRepositoryException;
 
+	void updateStudents(List<Student> students) throws StudentRepositoryException;
+
 }

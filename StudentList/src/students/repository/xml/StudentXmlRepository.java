@@ -26,7 +26,6 @@ public class StudentXmlRepository implements StudentRepository {
 
 	public StudentXmlRepository(String path) {
 		repoPath = path;
-
 	}
 
 	@Override
@@ -40,19 +39,21 @@ public class StudentXmlRepository implements StudentRepository {
 
 	@Override
 	public Student selectById(int id) throws StudentRepositoryException {
+
 		if (studentColl == null) {
 			throw new StudentRepositoryException("Das Repository wurde noch nicht geladen");
 		}
 		// Student-Objekt mit der gesuchten ID aus der Liste holen
 		Optional<Student> student = studentColl.getStudents().stream().filter(s -> s.getId() == id).findFirst();
 		// ... und zurückliefern bzw. Fehler werfen falls es nicht existiert
-		return student.orElseThrow(
-				() -> new StudentRepositoryException("Das Objekt mit Id " + id + " wurde nicht gefunden"));
+		return student
+				.orElseThrow(() -> new StudentRepositoryException("Das Objekt mit Id " + id + " wurde nicht gefunden"));
 
 	}
 
 	@Override
 	public int insertStudent(Student student) throws StudentRepositoryException {
+
 		// nächste ID für das Student-Objekt verwenden
 		student.setId(studentColl.incrementNextStudentId());
 		// Objekt im Repository hinzufügen
@@ -94,6 +95,24 @@ public class StudentXmlRepository implements StudentRepository {
 		// und alles speichern
 		saveData();
 
+	}
+
+	@Override
+	public void updateStudents(List<Student> students) throws StudentRepositoryException {
+		for (Student student : students) {
+			Student orig = selectById(student.getId());
+			if (orig == null) {
+				new StudentRepositoryException("Das Objekt mit Id " + student.getId() + " wurde nicht gefunden");
+			}
+			// sonst: ersetzen
+			int index = studentColl.getStudents().indexOf(orig);
+			// und das geänderte Objekt an diesem Index setzen
+			studentColl.getStudents().set(index, student);
+		}
+		// Wenn alles erledigt ist -> speichern
+		saveData();
+
+//		throw new RuntimeException("Exception");
 	}
 
 	// StudentCollection aus dem XML File laden oder neue StudentCollection erzeugen

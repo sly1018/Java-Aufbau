@@ -17,6 +17,18 @@ import students.repository.StudentRepositoryException;
 
 public class StudentDbRepository implements StudentRepository {
 
+	private final static String INSERT_STUDENT_STATEMENT = "insert into Students (name, areaCode, city, birthDate , gender, language, xml, html, fxml, comment)"
+			+ " values(?,?,?,?,?,?,?,?,?,?) ";
+
+	// Update Statement mit den Parametern in der gleichen Reihenfolge wie beim
+	// Insert-Statement
+	// zusätzlicher Parameter am Ende: für die id
+	private final static String UPDATE_STATEMENT = "update Students set name=?, areaCode = ?, city = ?, birthDate = ? , gender = ?, language = ?, xml = ?, html = ?, fxml = ?, comment=?"
+			+ " where id = ?";
+
+	// Delete-Statement hat nur einen Parameter: die Id
+	private final static String DELETE_STUDENT_STATEMENT = "delete from Students where id = ?";
+
 	// Informationen zur Connection
 	private String dbUrl, userName, password;
 
@@ -91,31 +103,12 @@ public class StudentDbRepository implements StudentRepository {
 		// xml, html, fxml, comment)
 
 		try (Connection conn = DriverManager.getConnection(dbUrl, userName, password)) {
-			String sql = "insert into Students (name, areaCode, city, birthDate , gender, language, xml, html, fxml, comment)"
-					+ " values(?,?,?,?,?,?,?,?,?,?) ";
 
 			// Statement erzeugen, das nach dem Ergebnis auch ein Resultset mit dem neuen
 			// Keywert zurückliefert
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement stmt = conn.prepareStatement(INSERT_STUDENT_STATEMENT, Statement.RETURN_GENERATED_KEYS);
 
-			// Als 1. Parameter den Namen setzen
-			stmt.setString(1, student.getName());
-			// Als 2. die PLZ setzen
-			stmt.setInt(2, student.getAreaCode());
-			// usw
-			stmt.setString(3, student.getCity());
-			// LocalDate: in Date umgewandelt
-			stmt.setDate(4, Date.valueOf(student.getBirthDate()));
-			// enum -> in Zeichenfolge umgewandelt
-			stmt.setString(5, student.getGender().toString());
-			stmt.setString(6, student.getLanguage());
-
-			// booleans
-			stmt.setBoolean(7, student.isXml());
-			stmt.setBoolean(8, student.isHtml());
-			stmt.setBoolean(9, student.isFxml());
-
-			stmt.setString(10, student.getComment());
+			setCommonParameters(student, stmt);
 			// Den Befehl ausführen, Ergebnis ist Anzahl der betroffenen Datensätze
 			// -> muss 1 sein, wenn alles passt
 			int rowAffected = stmt.executeUpdate();
@@ -145,30 +138,115 @@ public class StudentDbRepository implements StudentRepository {
 
 	@Override
 	public void updateStudent(Student student) throws StudentRepositoryException {
-		// TODO Auto-generated method stub
-		throw new RuntimeException("Noch nicht implementiert");
-//		try (Connection conn = DriverManager.getConnection(dbUrl, userName, password)) {
-//
-//		} catch (Exception e) {
-//			System.err.println("Fehler beim Aktualisieren eines Student-Datensatzes");
-//			e.printStackTrace();
-//			throw new StudentRepositoryException("Fehler beim Aktualisieren eines Studenten-Datensatzes", e);
-//		}
+		// Einen Studenten ändern
+
+		try (Connection conn = DriverManager.getConnection(dbUrl, userName, password)) {
+			PreparedStatement stmt = conn.prepareStatement(UPDATE_STATEMENT);
+			// Alle Parameter setzen
+			setCommonParameters(student, stmt);
+			// ID setzen ( bei Tabelle Students ist es der 11. Parameter)
+			stmt.setInt(11, student.getId());
+			int count = stmt.executeUpdate();
+			// Wenn kein Datensatz betroffen ist, dann existiert der Student-Datensatz nicht
+			// mehr
+			if (count == 0) {
+				throw new StudentRepositoryException("Student mit ID " + student.getId() + "existiert nicht");
+			}
+
+		} catch (Exception e) {
+			System.err.println("Fehler beim Aktualisieren eines Student-Datensatzes");
+			e.printStackTrace();
+			throw new StudentRepositoryException("Fehler beim Aktualisieren eines Studenten-Datensatzes", e);
+		}
 
 	}
 
 	@Override
 	public void deleteStudent(int id) throws StudentRepositoryException {
-		// TODO Auto-generated method stub
-		throw new RuntimeException("Noch nicht implementiert");
-//		try (Connection conn = DriverManager.getConnection(dbUrl, userName, password)) {
-//
-//		} catch (Exception e) {
-//			System.err.println("Fehler beim Löschen eines Student-Datensatzes");
-//			e.printStackTrace();
-//			throw new StudentRepositoryException("Fehler beim Löschen eines Studenten-Datensatzes", e);
-//		}
+		// Den Studenten löschen
+		try (Connection conn = DriverManager.getConnection(dbUrl, userName, password)) {
+			PreparedStatement stmt = conn.prepareStatement(DELETE_STUDENT_STATEMENT);
+			// die ID setzen
+			stmt.setInt(1, id);
+			// und ausführen
+			int count = stmt.executeUpdate();
+			// Wenn kein Datensatz betroffen ist, dann existiert der Student-Datensatz nicht
+			// mehr
+			if (count == 0) {
+				throw new StudentRepositoryException("Student mit ID " + id + " existiert nicht");
+			}
+		} catch (Exception e) {
+			System.err.println("Fehler beim Löschen eines Student-Datensatzes");
+			e.printStackTrace();
+			throw new StudentRepositoryException("Fehler beim Löschen eines Studenten-Datensatzes", e);
+		}
 
+	}
+
+	@Override
+	public void updateStudents(List<Student> students) throws StudentRepositoryException {
+		//
+		try (Connection conn = DriverManager.getConnection(dbUrl, userName, password)) {
+			// Alle Studenten aktualisieren, alle Änderungen müssen in einer Transaktion
+			// laufen
+			// autoCommit deaktivieren
+			conn.setAutoCommit(false); // Wenn ich Autocommit nicht mache, brauche ich auch nicht commit und rollback
+			PreparedStatement stmt = conn.prepareStatement(UPDATE_STATEMENT);
+			try {
+				for (Student student : students) {
+					System.out.println("Aktualisere Student " + student);
+					// Parameter-Werte setzen
+					setCommonParameters(student, stmt);
+					stmt.setInt(11, student.getId());
+					// Update ausführen
+					int count = stmt.executeUpdate();
+					// Wenn ein Student dabei ist, der nicht mehr existiert
+					// mehr
+					if (count == 0) {
+						throw new StudentRepositoryException("Student mit ID " + student.getId() + " existiert nicht");
+					}
+
+					System.out.println("... Aktualisierung OK");
+				}
+				// Wenn wir hier angelangt sind -> ist alles gut gegangen, alle Änderungen
+				// wurden durchgeführt
+				// -> Transaktion abschließen (commit)
+				conn.commit();
+			} catch (Exception inner) {
+				// Wenn innerhalb unserer Transaktion ein Fehler passiert
+				// -> rollback ausführen
+				conn.rollback();
+				throw new StudentRepositoryException("Fehler beim Aktualisieren eines Datensatzes", inner);
+			}
+
+		} catch (SQLException e) {
+
+			System.err.println("Fehler beim Aktualisieren der Studenten-List");
+			e.printStackTrace();
+			throw new StudentRepositoryException("Fehler beim Aktualisieren der Studenten-List", e);
+		}
+	}
+	
+
+	private void setCommonParameters(Student student, PreparedStatement stmt) throws SQLException {
+		// Als 1. Parameter den Namen setzen
+		stmt.setString(1, student.getName());
+		// Als 2. die PLZ setzen
+		stmt.setInt(2, student.getAreaCode());
+		// usw
+		stmt.setString(3, student.getCity());
+		// LocalDate: in Date umgewandelt
+		stmt.setDate(4, Date.valueOf(student.getBirthDate()));
+		// enum -> in Zeichenfolge umgewandelt
+		stmt.setString(5, student.getGender().toString());
+		stmt.setString(6, student.getLanguage());
+
+		// booleans
+		stmt.setBoolean(7, student.isXml());
+		stmt.setBoolean(8, student.isHtml());
+		stmt.setBoolean(9, student.isFxml());
+
+		stmt.setString(10, student.getComment());
 	}
 
 	private Student readStudent(ResultSet result) throws SQLException {

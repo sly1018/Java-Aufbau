@@ -49,6 +49,11 @@ public class jdbcStatementsDemo {
 
 				System.out.printf("%s: id=%d, imZooseit=%s, Pflanzenfresser: %b, Gewicht: %s\n", name, tierId,
 						imZooSeit, pflanzenfresser, gewicht != null ? gewicht + "kg" : "n.V.");
+				
+				// Ist eigentlich nicht nötig, weil das inderekt über das 
+				// Schließen der Connection passiert
+				result.close();
+				sqlCommand.close();
 			}
 		} catch (SQLException e) {
 			System.err.println("Fehler beim Abrufen der Daten:");
