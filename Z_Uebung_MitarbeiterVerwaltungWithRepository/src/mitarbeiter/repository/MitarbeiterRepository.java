@@ -1,6 +1,6 @@
 package mitarbeiter.repository;
 
-import java.util.List;
+import java.util.Map;
 
 public interface MitarbeiterRepository {
 
@@ -10,7 +10,7 @@ public interface MitarbeiterRepository {
 	 * @return Liste von Mitarbeitern
 	 * @throws MitarbeiterRepositoryException
 	 */
-	List<Mitarbeiter> selectAll() throws MitarbeiterRepositoryException;
+	Map<Integer, Mitarbeiter> selectAll() throws MitarbeiterRepositoryException;
 	
 	/**
 	 * Einen Mitarbeiter anhand von dessen Id laden.

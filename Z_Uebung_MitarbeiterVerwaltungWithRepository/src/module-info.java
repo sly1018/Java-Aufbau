@@ -4,6 +4,6 @@ module mitarbeiterVerwaltungWithRepository {
 
 	// für JAXB öffnen
 	opens mitarbeiter.repository;
-	opens mitarbeiter.repository.xml;
+	//opens mitarbeiter.repository.xml;
 
 }

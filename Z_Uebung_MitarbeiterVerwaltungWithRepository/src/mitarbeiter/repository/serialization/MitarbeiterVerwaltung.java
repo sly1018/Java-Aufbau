@@ -25,22 +25,20 @@ public class MitarbeiterVerwaltung implements Serializable, MitarbeiterRepositor
 		this.fileName = fileName;
 	}
 
+	public void showAll() {
+		mitarbeiterMap.values().forEach(System.out::println);
+	}
+
 	@Override
-	public List<Mitarbeiter> selectAll() throws MitarbeiterRepositoryException {
-		try {
-			this.loadData();
-		} catch (ClassNotFoundException | IOException e) {
-			System.out.println("Es ist ein Fehler aufgetreten:");
-			e.printStackTrace();
-		}
-		return (List<Mitarbeiter>) mitarbeiterMap;
+	public Map<Integer, Mitarbeiter> selectAll() throws MitarbeiterRepositoryException {
+		return mitarbeiterMap;
 	}
 
 	@Override
 	public Mitarbeiter selectById(int id) throws MitarbeiterRepositoryException {
 
-		if(mitarbeiterMap.containsKey(id)) {
-			return mitarbeiterMap.get(id);			
+		if (mitarbeiterMap.containsKey(id)) {
+			return mitarbeiterMap.get(id);
 		} else {
 			throw new MitarbeiterRepositoryException("Mitarbeiter mit der Nummer:" + id + " wurde nicht gefunden.");
 		}
@@ -55,16 +53,15 @@ public class MitarbeiterVerwaltung implements Serializable, MitarbeiterRepositor
 
 	@Override
 	public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws MitarbeiterRepositoryException {
-		// TODO Auto-generated method stub
-
+		mitarbeiterMap.replace(mitarbeiter.getZahler(), mitarbeiter);
 	}
 
 	@Override
 	public void deleteMitarbeiter(int id) throws MitarbeiterRepositoryException {
-		// TODO Auto-generated method stub
+		mitarbeiterMap.remove(id);
 	}
 
-	public void loadData() throws ClassNotFoundException, IOException {
+	public void loadData() throws ClassNotFoundException, IOException, MitarbeiterRepositoryException {
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
 			// Mitarbeiter-Objekt lesen
 			Object obj1 = ois.readObject();
@@ -75,7 +72,7 @@ public class MitarbeiterVerwaltung implements Serializable, MitarbeiterRepositor
 		}
 	}
 
-	public void saveData() throws IOException {
+	public void saveData() throws IOException, MitarbeiterRepositoryException {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
 			// Mitarbeiter-Objekt in den Stream schreiben
 			oos.writeObject(mitarbeiterMap);

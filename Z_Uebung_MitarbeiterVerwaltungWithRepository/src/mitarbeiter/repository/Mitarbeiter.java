@@ -1,9 +1,10 @@
 package mitarbeiter.repository;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeItf {
+public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeItf, Serializable {
 
 	private static int zaehler;
 
@@ -33,6 +34,22 @@ public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeIt
 
 	public int getMitarbeiterId() {
 		return mitarbeiterId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setGbDatum(LocalDate gbDatum) {
+		this.gbDatum = gbDatum;
+	}
+
+	public void setEintrittsDatum(LocalDate eintrittsDatum) {
+		this.eintrittsDatum = eintrittsDatum;
+	}
+
+	public void setGrundgehalt(double grundgehalt) {
+		this.grundgehalt = grundgehalt;
 	}
 
 	@Override
@@ -101,6 +118,12 @@ public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeIt
 	public int compareTo(MitarbeiterGruppeItf o2) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public String toString() {
+		return "[Mitarbeiter Id: %d], [Name: %s], [Geburtsdatum: %s], [Eintrittsdatum: %s], [Grundgehalt: %.2f]"
+				.formatted(mitarbeiterId, name, gbDatum, eintrittsDatum, grundgehalt);
 	}
 
 }
