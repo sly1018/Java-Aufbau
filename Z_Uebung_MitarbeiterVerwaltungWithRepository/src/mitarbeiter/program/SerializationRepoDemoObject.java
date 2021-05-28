@@ -51,8 +51,7 @@ public class SerializationRepoDemoObject {
 				// Einen Mitarbeiter löschen
 				System.out.println("\nEinen Mitarbeiter löschen und alle anzeigen:");
 				mVerwaltung.deleteMitarbeiter(2);
-				Map<Integer, Mitarbeiter> mt = mVerwaltung.selectAll();
-				mt.values().forEach(System.out::println);
+				mVerwaltung.showAll();
 			}
 		} catch (ClassNotFoundException | IOException | MitarbeiterRepositoryException e) {
 			System.out.println("Ein Fehler ist aufgetreten");

@@ -30,8 +30,9 @@ public class MitarbeiterVerwaltung implements Serializable, MitarbeiterRepositor
 	}
 
 	@Override
-	public Map<Integer, Mitarbeiter> selectAll() throws MitarbeiterRepositoryException {
-		return mitarbeiterMap;
+	public List<Mitarbeiter> selectAll() throws MitarbeiterRepositoryException {
+		// TODO: map to list
+		return null;
 	}
 
 	@Override
@@ -82,5 +83,4 @@ public class MitarbeiterVerwaltung implements Serializable, MitarbeiterRepositor
 			System.out.println("Serialisierung erfolgreich!");
 		}
 	}
-
 }

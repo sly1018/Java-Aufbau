@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mitarbeiterRepository>
+    <mitarbeiters>
+        <mitarbeiter>
+            <grundgehalt>2300.0</grundgehalt>
+            <mitarbeiterId>1</mitarbeiterId>
+            <name>Lana</name>
+        </mitarbeiter>
+        <mitarbeiter xsi:type="experte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <grundgehalt>2450.0</grundgehalt>
+            <mitarbeiterId>2</mitarbeiterId>
+            <name>Ana</name>
+            <fachgebiet>BWL</fachgebiet>
+        </mitarbeiter>
+        <mitarbeiter xsi:type="manager" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <grundgehalt>2100.0</grundgehalt>
+            <mitarbeiterId>3</mitarbeiterId>
+            <name>Gustl</name>
+            <bonus>300.0</bonus>
+        </mitarbeiter>
+    </mitarbeiters>
+    <nextMitarbeiterId>4</nextMitarbeiterId>
+</mitarbeiterRepository>

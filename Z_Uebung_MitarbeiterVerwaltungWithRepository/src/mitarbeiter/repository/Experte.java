@@ -16,6 +16,10 @@ public class Experte extends Mitarbeiter {
 		this.fachgebiet = fg;
 	}
 
+	public String getFachgebiet() {
+		return fachgebiet;
+	}
+
 	public void setFachgebiet(String fachgebiet) {
 		this.fachgebiet = fachgebiet;
 	}

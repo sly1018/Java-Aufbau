@@ -8,7 +8,7 @@ public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeIt
 
 	private static int zaehler;
 
-	private final int mitarbeiterId;
+	private int mitarbeiterId;
 	private String name;
 	private LocalDate gbDatum;
 	private LocalDate eintrittsDatum;
@@ -34,6 +34,10 @@ public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeIt
 
 	public int getMitarbeiterId() {
 		return mitarbeiterId;
+	}
+
+	public void setMitarbeiterId(int mitarbeiterId) {
+		this.mitarbeiterId = mitarbeiterId;
 	}
 
 	public void setName(String name) {
@@ -119,7 +123,7 @@ public class Mitarbeiter implements Comparable<Mitarbeiter>, MitarbeiterGruppeIt
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "[Mitarbeiter Id: %d], [Name: %s], [Geburtsdatum: %s], [Eintrittsdatum: %s], [Grundgehalt: %.2f]"
